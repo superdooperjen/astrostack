@@ -357,31 +357,122 @@ canvas#next-preview {
 
 /* Responsive adjustments */
 @media (max-width: 820px) {
+  body {
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  header {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px 12px 4px 12px;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+
+  .header-controls {
+    gap: 6px;
+  }
+
+  .theme-btn {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+  }
+
+  .btn-icon {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+
   .game-container {
-    grid-template-columns: 1fr;
-    grid-template-areas: 
-      "board"
-      "hud";
-    gap: 15px;
-    max-width: 450px;
+    grid-template-columns: 78px 1fr 78px;
+    grid-template-areas: "hud board next";
+    gap: 8px;
+    width: 98%;
+    max-width: 480px;
+    margin: 2px auto;
+    padding: 0 4px;
+    align-items: center;
+    flex: 1;
+    min-height: 0; /* allows proper shrinking */
   }
 
   .panel-left {
     grid-area: hud;
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 12px;
   }
 
   .panel-right {
-    display: none; /* Hide PC-only guide on small devices */
+    grid-area: next;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  /* Hide key bindings guides on mobile */
+  .panel-right .stat-group:nth-child(2) {
+    display: none;
+  }
+
+  /* Compact HUD fonts and layouts on mobile */
+  .stat-group {
+    margin-bottom: 0;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  .stat-value {
+    font-size: 1rem;
   }
 
   .preview-box {
-    margin-top: 0;
+    padding: 4px;
+    border-radius: 6px;
+    margin-top: 2px;
   }
 
+  canvas#next-preview {
+    width: 100%;
+    max-width: 55px;
+    height: auto;
+  }
+
+  .board-container {
+    padding: 3px;
+    border-radius: 8px;
+  }
+
+  /* Mobile Controls - compact & aligned */
   .mobile-controls {
     display: grid;
+    margin: 4px auto 12px auto;
+    padding: 0 8px;
+    width: 98%;
+    max-width: 420px;
+    gap: 6px;
+    height: auto;
+  }
+
+  .m-btn {
+    padding: 11px;
+    font-size: 0.75rem;
+    border-radius: 8px;
   }
 }
+

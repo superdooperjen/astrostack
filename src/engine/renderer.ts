@@ -35,8 +35,8 @@ export class GameRenderer {
     const parent = this.canvas.parentElement;
     if (!parent) return;
 
-    // Get the maximum height we can occupy (leave some room for header/controls)
-    const maxHeight = window.innerHeight * 0.70;
+    const isMobile = window.innerWidth <= 820;
+    const maxHeight = isMobile ? window.innerHeight * 0.48 : window.innerHeight * 0.70;
     const parentWidth = parent.clientWidth;
 
     // Calculate grid size based on space limits maintaining 1:2 aspect ratio
