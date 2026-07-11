@@ -366,59 +366,77 @@ canvas#next-preview {
   header {
     flex-wrap: wrap;
     justify-content: center;
-    padding: 8px 12px 4px 12px;
+    padding: 6px 12px 2px 12px;
     gap: 8px;
   }
 
   h1 {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
   }
 
   .header-controls {
-    gap: 6px;
+    gap: 4px;
+    align-items: center;
   }
 
   .theme-btn {
-    padding: 4px 10px;
-    font-size: 0.75rem;
+    padding: 3px 8px;
+    font-size: 0.7rem;
   }
 
   .btn-icon {
-    width: 32px;
-    height: 32px;
-    padding: 6px;
+    width: 28px;
+    height: 28px;
+    padding: 4px;
   }
 
   .game-container {
-    grid-template-columns: 78px 1fr 78px;
-    grid-template-areas: "hud board next";
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    grid-template-rows: auto auto;
     gap: 8px;
-    width: 98%;
+    width: 99%;
     max-width: 480px;
     margin: 2px auto;
     padding: 0 4px;
     align-items: center;
     flex: 1;
-    min-height: 0; /* allows proper shrinking */
+    min-height: 0;
+  }
+
+  .board-container {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 2px;
+    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .panel-left {
-    grid-area: hud;
+    grid-column: 2;
+    grid-row: 2;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 8px;
-    border-radius: 12px;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 8px;
+    align-self: start;
   }
 
   .panel-right {
-    grid-area: next;
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 8px;
-    border-radius: 12px;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 8px;
+    align-self: end;
   }
 
   /* Hide key bindings guides on mobile */
@@ -432,47 +450,30 @@ canvas#next-preview {
   }
 
   .stat-label {
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     letter-spacing: 1px;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
   }
 
   .stat-value {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   .preview-box {
-    padding: 4px;
-    border-radius: 6px;
-    margin-top: 2px;
+    padding: 3px;
+    border-radius: 4px;
+    margin-top: 1px;
   }
 
   canvas#next-preview {
     width: 100%;
-    max-width: 55px;
+    max-width: 50px;
     height: auto;
   }
 
-  .board-container {
-    padding: 3px;
-    border-radius: 8px;
-  }
-
-  /* Mobile Controls - compact & aligned */
+  /* Hide bottom controls completely on mobile */
   .mobile-controls {
-    display: grid;
-    margin: 4px auto 12px auto;
-    padding: 0 8px;
-    width: 98%;
-    max-width: 420px;
-    gap: 6px;
-    height: auto;
-  }
-
-  .m-btn {
-    padding: 11px;
-    font-size: 0.75rem;
-    border-radius: 8px;
+    display: none !important;
   }
 }
 

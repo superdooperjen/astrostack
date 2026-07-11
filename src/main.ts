@@ -59,6 +59,9 @@ const restartBtn = document.getElementById('restart-btn')!;
 const muteBtn = document.getElementById('mute-btn')!;
 const muteIcon = document.getElementById('mute-icon')!;
 
+const pauseBtnHeader = document.getElementById('pause-btn')!;
+const pauseIconHeader = document.getElementById('pause-icon')!;
+
 // Theme buttons
 const themeBtnDark = document.getElementById('theme-btn-dark')!;
 const themeBtnLight = document.getElementById('theme-btn-light')!;
@@ -144,6 +147,12 @@ function launchGame() {
   startOverlay.classList.remove('active');
   gameOverOverlay.classList.remove('active');
   pauseOverlay.classList.remove('active');
+
+  // Reset pause icon in case game was restarted from paused state
+  pauseIconHeader.innerHTML = `
+    <line x1="18" y1="4" x2="18" y2="20"></line>
+    <line x1="6" y1="4" x2="6" y2="20"></line>
+  `;
 
   renderer.particles.clear();
   
@@ -303,9 +312,18 @@ function togglePause() {
   state.paused = !state.paused;
   if (state.paused) {
     pauseOverlay.classList.add('active');
+    // Show Play icon
+    pauseIconHeader.innerHTML = `
+      <polygon points="6 4 20 12 6 20 6 4" fill="currentColor"></polygon>
+    `;
   } else {
     pauseOverlay.classList.remove('active');
     lastTime = performance.now(); // reset timer offset
+    // Show Pause icon
+    pauseIconHeader.innerHTML = `
+      <line x1="18" y1="4" x2="18" y2="20"></line>
+      <line x1="6" y1="4" x2="6" y2="20"></line>
+    `;
   }
 }
 
@@ -384,18 +402,97 @@ window.addEventListener('keydown', (e) => {
 // Prevent scrolling inside canvas or controls when swiping on mobile
 document.addEventListener('touchmove', (e) => {
   const target = e.target as HTMLElement;
-  if (target.closest('.board-container') || target.closest('.mobile-controls')) {
+  if (target.closest('.board-container')) {
     e.preventDefault();
   }
 }, { passive: false });
 
-// Mobile Button Listeners
+// Screen Gestures implementation
+let touchStartX = 0;
+let touchStartY = 0;
+let touchLastMoveX = 0;
+let touchLastMoveY = 0;
+let touchStartTime = 0;
+let touchHasSwiped = false;
+
+// We wait for DOM content loaded to attach gesture listeners on canvas
+window.addEventListener('DOMContentLoaded', () => {
+  const boardCanvas = document.getElementById('game-board')!;
+
+  boardCanvas.addEventListener('touchstart', (e: TouchEvent) => {
+    if (e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchLastMoveX = touchStartX;
+    touchLastMoveY = touchStartY;
+    touchStartTime = performance.now();
+    touchHasSwiped = false;
+  }, { passive: true });
+
+  boardCanvas.addEventListener('touchmove', (e: TouchEvent) => {
+    if (state.gameOver || state.paused || !currentPiece) return;
+    if (e.touches.length !== 1) return;
+
+    // Prevent default viewport bounce/scrolling
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    const dx = touch.clientX - touchLastMoveX;
+    const dy = touch.clientY - touchLastMoveY;
+
+    // Swipe horizontal check: 24 pixels threshold for one grid movement
+    if (dx > 24) {
+      moveRight();
+      touchLastMoveX = touch.clientX;
+      touchHasSwiped = true;
+    } else if (dx < -24) {
+      moveLeft();
+      touchLastMoveX = touch.clientX;
+      touchHasSwiped = true;
+    }
+
+    // Swipe vertical down check: 20 pixels threshold for one line drop
+    if (dy > 20) {
+      moveDown();
+      touchLastMoveY = touch.clientY;
+      touchHasSwiped = true;
+    }
+  }, { passive: false });
+
+  boardCanvas.addEventListener('touchend', (e: TouchEvent) => {
+    if (state.gameOver || state.paused || !currentPiece) return;
+    if (e.changedTouches.length !== 1) return;
+
+    const touch = e.changedTouches[0];
+    const totalDx = touch.clientX - touchStartX;
+    const totalDy = touch.clientY - touchStartY;
+    const duration = performance.now() - touchStartTime;
+
+    // 1. Fast vertical swipe down -> Hard Drop
+    if (totalDy > 80 && duration < 250) {
+      hardDrop();
+      return;
+    }
+
+    // 2. Tap to Rotate
+    // If touch ended quickly without moving much, it's a tap
+    if (!touchHasSwiped && Math.abs(totalDx) < 10 && Math.abs(totalDy) < 10 && duration < 250) {
+      rotate();
+    }
+  }, { passive: true });
+});
+
+// Mobile Button Listeners (kept just for desktop pointerdown safety or in case)
 mBtnLeft.addEventListener('pointerdown', (e) => { e.preventDefault(); moveLeft(); });
 mBtnRight.addEventListener('pointerdown', (e) => { e.preventDefault(); moveRight(); });
 mBtnRot.addEventListener('pointerdown', (e) => { e.preventDefault(); rotate(); });
 mBtnSoft.addEventListener('pointerdown', (e) => { e.preventDefault(); moveDown(); });
 mBtnHard.addEventListener('pointerdown', (e) => { e.preventDefault(); hardDrop(); });
 mBtnPause.addEventListener('pointerdown', (e) => { e.preventDefault(); togglePause(); });
+
+// Header Controls Listeners
+pauseBtnHeader.addEventListener('click', togglePause);
 
 // Overlay Button Listeners
 startBtn.addEventListener('click', launchGame);
