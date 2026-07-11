@@ -255,8 +255,8 @@ canvas#next-preview {
   align-items: center;
   border-radius: 12px;
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 5;
   padding: 20px;
   text-align: center;
@@ -264,7 +264,7 @@ canvas#next-preview {
 
 .overlay.active {
   opacity: 1;
-  pointer-events: auto;
+  visibility: visible;
 }
 
 .overlay-title {
@@ -393,7 +393,7 @@ canvas#next-preview {
 
   .game-container {
     display: grid;
-    grid-template-columns: 1fr 90px;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     gap: 8px;
     width: 99%;
@@ -406,8 +406,8 @@ canvas#next-preview {
   }
 
   .board-container {
-    grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-column: 1 / span 2;
+    grid-row: 2;
     padding: 2px;
     border-radius: 6px;
     width: 100%;
@@ -418,30 +418,39 @@ canvas#next-preview {
   }
 
   .panel-left {
-    grid-column: 2;
-    grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 6px;
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 10px;
+    padding: 6px 10px;
     border-radius: 8px;
-    align-self: start;
+    width: 100%;
   }
 
   .panel-right {
     grid-column: 2;
     grid-row: 1;
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 6px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
     border-radius: 8px;
-    align-self: end;
+    width: 100%;
+  }
+
+  /* Make next-piece label and preview side-by-side */
+  .panel-right .stat-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
   }
 
   /* Hide key bindings guides on mobile */
   .panel-right .stat-group:nth-child(2) {
-    display: none;
+    display: none !important;
   }
 
   /* Compact HUD fonts and layouts on mobile */
@@ -462,13 +471,12 @@ canvas#next-preview {
   .preview-box {
     padding: 3px;
     border-radius: 4px;
-    margin-top: 1px;
+    margin-top: 0;
   }
 
   canvas#next-preview {
-    width: 100%;
-    max-width: 50px;
-    height: auto;
+    width: 42px;
+    height: 42px;
   }
 
   /* Hide bottom controls completely on mobile */
