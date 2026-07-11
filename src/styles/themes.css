@@ -1,0 +1,52 @@
+/* Cosmic Themes Configuration */
+
+:root[data-theme="dark"] {
+  --bg-color: #05050f;
+  --galaxy-gradient: radial-gradient(circle at center, #0f0c20 0%, #030308 100%);
+  --panel-bg: rgba(15, 15, 30, 0.6);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-shadow: rgba(0, 0, 0, 0.5);
+  --text-color: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent-color: #00f0ff;
+  --accent-glow: rgba(0, 240, 255, 0.4);
+  --accent-secondary: #d300ff;
+  
+  --button-bg: rgba(255, 255, 255, 0.06);
+  --button-hover: rgba(255, 255, 255, 0.12);
+  --button-text: #f1f5f9;
+}
+
+:root[data-theme="light"] {
+  --bg-color: #f1f5f9;
+  --galaxy-gradient: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
+  --panel-bg: rgba(255, 255, 255, 0.7);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --panel-shadow: rgba(148, 163, 184, 0.15);
+  --text-color: #0f172a;
+  --text-secondary: #475569;
+  --accent-color: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.3);
+  --accent-secondary: #db2777;
+  
+  --button-bg: rgba(0, 0, 0, 0.05);
+  --button-hover: rgba(0, 0, 0, 0.1);
+  --button-text: #0f172a;
+}
+
+:root[data-theme="galaxy"] {
+  --bg-color: #0b001a;
+  --galaxy-gradient: radial-gradient(circle at center, #1b003a 0%, #030008 100%);
+  --panel-bg: rgba(26, 0, 51, 0.5);
+  --panel-border: rgba(211, 0, 255, 0.2);
+  --panel-shadow: rgba(0, 0, 0, 0.7);
+  --text-color: #fae8ff;
+  --text-secondary: #c084fc;
+  --accent-color: #d300ff;
+  --accent-glow: rgba(211, 0, 255, 0.5);
+  --accent-secondary: #00f0ff;
+  
+  --button-bg: rgba(211, 0, 255, 0.1);
+  --button-hover: rgba(211, 0, 255, 0.2);
+  --button-text: #fae8ff;
+}

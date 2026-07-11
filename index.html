@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AstroStack - Cosmic Block Stacking</title>
+  <meta name="description" content="A vibrant, neon space-themed block-stacking puzzle game built with Canvas, TypeScript, and Web Audio API synthesizer.">
+  <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body>
+  
+  <header>
+    <h1>AstroStack</h1>
+    <div class="header-controls">
+      <div class="theme-selector">
+        <button id="theme-btn-dark" class="theme-btn active">Dark</button>
+        <button id="theme-btn-light" class="theme-btn">Light</button>
+        <button id="theme-btn-galaxy" class="theme-btn">Galaxy</button>
+      </div>
+      <button id="mute-btn" class="btn-icon" title="Toggle Sound" aria-label="Toggle Sound">
+        <!-- Sound icon (speaker-on by default) -->
+        <svg id="mute-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="game-container">
+    
+    <!-- Left Sidebar: Stats & Level Info -->
+    <section class="panel panel-left glass-panel">
+      <div class="stat-group">
+        <div class="stat-label">Score</div>
+        <div id="score" class="stat-value highlight">0</div>
+      </div>
+      <div class="stat-group">
+        <div class="stat-label">High Score</div>
+        <div id="high-score" class="stat-value">0</div>
+      </div>
+      <div class="stat-group">
+        <div class="stat-label">Level</div>
+        <div id="level" class="stat-value highlight">0</div>
+      </div>
+      <div class="stat-group">
+        <div class="stat-label">Lines</div>
+        <div id="lines-cleared" class="stat-value">0</div>
+      </div>
+    </section>
+
+    <!-- Center: The Canvas Playboard -->
+    <section class="board-container glass-panel">
+      <canvas id="game-board"></canvas>
+      
+      <!-- Start Overlay -->
+      <div id="start-overlay" class="overlay active">
+        <div class="overlay-title">AstroStack</div>
+        <div class="overlay-desc">Stack cosmic block matrices, clear cosmic rows, and survive the gravitational collapse. Ready for launch?</div>
+        <button id="start-btn" class="btn-primary">LAUNCH GAME</button>
+      </div>
+
+      <!-- Pause Overlay -->
+      <div id="pause-overlay" class="overlay">
+        <div class="overlay-title">Suspended</div>
+        <div class="overlay-desc">Temporal drop speed frozen. Starfield drift running at sub-light speed.</div>
+        <button id="resume-btn" class="btn-primary">RESUME MISSION</button>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div id="game-over-overlay" class="overlay">
+        <div class="overlay-title">M-Loss</div>
+        <div class="overlay-desc">Hull breach detected. Blocks overflowed coordinate parameters.</div>
+        <div class="stat-group" style="margin-bottom: 20px;">
+          <div class="stat-label" style="font-size: 0.75rem;">Final Score</div>
+          <div id="final-score" class="stat-value highlight" style="font-size: 2.2rem;">0</div>
+        </div>
+        <button id="restart-btn" class="btn-primary">RELAUNCH</button>
+      </div>
+    </section>
+
+    <!-- Right Sidebar: Next block & Control details -->
+    <section class="panel panel-right glass-panel">
+      <div class="stat-group">
+        <div class="stat-label">Next Piece</div>
+        <div class="preview-box">
+          <canvas id="next-preview"></canvas>
+        </div>
+      </div>
+      
+      <div class="stat-group">
+        <div class="stat-label">Key Bindings</div>
+        <div class="controls-list">
+          <div class="control-item">
+            <span>Move Left</span>
+            <kbd class="key-cap">◀</kbd>
+          </div>
+          <div class="control-item">
+            <span>Move Right</span>
+            <kbd class="key-cap">▶</kbd>
+          </div>
+          <div class="control-item">
+            <span>Rotate Piece</span>
+            <kbd class="key-cap">▲</kbd>
+          </div>
+          <div class="control-item">
+            <span>Soft Drop</span>
+            <kbd class="key-cap">▼</kbd>
+          </div>
+          <div class="control-item">
+            <span>Hard Drop</span>
+            <kbd class="key-cap">Space</kbd>
+          </div>
+          <div class="control-item">
+            <span>Pause Game</span>
+            <kbd class="key-cap">P / Esc</kbd>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mobile Controls Overlay Panel (Touch Devices Only) -->
+  <nav class="mobile-controls">
+    <button id="m-btn-rot" class="m-btn m-btn-rot">ROTATE</button>
+    <button id="m-btn-left" class="m-btn m-btn-left">◀ LEFT</button>
+    <button id="m-btn-right" class="m-btn m-btn-right">RIGHT ▶</button>
+    <button id="m-btn-soft" class="m-btn m-btn-soft">SOFT ▼</button>
+    <button id="m-btn-hard" class="m-btn m-btn-hard">HARD SPACE</button>
+    <button id="m-btn-pause" class="m-btn m-btn-pause">PAUSE MISSION</button>
+  </nav>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
